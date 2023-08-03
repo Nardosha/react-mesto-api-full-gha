@@ -1,8 +1,8 @@
-import {INTERSECTION_ERROR_CODE} from "../utils/ENUMS.js";
+import { INTERSECTION_ERROR_CODE } from '../utils/ENUMS';
 
-export default class intersectionError extends Error {
+export default class IntersectionError extends Error {
   constructor(message) {
     super(message);
-    this.statusCode = INTERSECTION_ERROR_CODE
+    this.statusCode = INTERSECTION_ERROR_CODE;
   }
 }
