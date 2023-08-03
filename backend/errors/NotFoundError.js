@@ -1,4 +1,4 @@
-import { NOT_FOUND_ERROR_CODE } from '../utils/ENUMS';
+import { NOT_FOUND_ERROR_CODE } from '../utils/ENUMS.js';
 
 export default class NotFoundError extends Error {
   constructor(message) {

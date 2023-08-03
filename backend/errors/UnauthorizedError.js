@@ -1,4 +1,4 @@
-import { UNAUTHORIZED_ERROR_CODE } from '../utils/ENUMS';
+import { UNAUTHORIZED_ERROR_CODE } from '../utils/ENUMS.js';
 
 export default class UnauthorizedError extends Error {
   constructor(message) {

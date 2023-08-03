@@ -3,16 +3,16 @@ import mongosse from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { errors } from 'celebrate';
-import usersRoutes from './routes/users';
-import cardRoutes from './routes/cards';
-import { NOT_FOUND_PAGE_ERROR } from './utils/ENUMS';
-import NotFoundError from './errors/NotFoundError';
-import errorHandler from './middlewares/errorHandler';
-import { validateLogin, validateUserData } from './utils/validationHelper';
-import { createUser, login } from './controllers/users';
-import auth from './middlewares/auth';
-import { errorLogger, requestLogger } from './middlewares/logger';
-import cors from './middlewares/CORS';
+import usersRoutes from './routes/users.js';
+import cardRoutes from './routes/cards.js';
+import { NOT_FOUND_PAGE_ERROR } from './utils/ENUMS.js';
+import NotFoundError from './errors/NotFoundError.js';
+import errorHandler from './middlewares/errorHandler.js';
+import { validateLogin, validateUserData } from './utils/validationHelper.js';
+import { createUser, login } from './controllers/users.js';
+import auth from './middlewares/auth.js';
+import { errorLogger, requestLogger } from './middlewares/logger.js';
+import cors from './middlewares/CORS.js';
 
 dotenv.config();
 

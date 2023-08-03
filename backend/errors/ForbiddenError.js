@@ -1,4 +1,4 @@
-import { FORBIDDEN_ERROR_CODE } from '../utils/ENUMS';
+import { FORBIDDEN_ERROR_CODE } from '../utils/ENUMS.js';
 
 export default class ForbiddenError extends Error {
   constructor(message) {

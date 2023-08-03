@@ -5,25 +5,25 @@ module.exports = {
   },
   extends: 'airbnb-base',
   overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: [
-        '.eslintrc.{js,cjs}',
-        './backend/.eslintrc.{js,cjs}',
-      ],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
+    // {
+    //   env: {
+    //     node: true,
+    //   },
+    //   files: [
+    //     '.eslintrc.{js,cjs}',
+    //   ],
+    //   parserOptions: {
+    //     sourceType: 'script',
+    //   },
+    // },
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   rules: {
-    'no-underscore-dangle': 0,
+    "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     'consistent-return': 'warn',
-  },
+    "import/extensions": 0
+  }
 };

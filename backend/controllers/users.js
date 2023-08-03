@@ -1,14 +1,14 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/user';
+import { User } from '../models/user.js';
 import {
   INTERSECTION_ERROR,
   NOT_FOUND_USER_ERROR,
   WRONG_AUTH_ERROR,
-} from '../utils/ENUMS';
-import NotFoundError from '../errors/NotFoundError';
-import UnauthorizedError from '../errors/UnauthorizedError';
-import IntersectionError from '../errors/IntersectionError';
+} from '../utils/ENUMS.js';
+import NotFoundError from '../errors/NotFoundError.js';
+import UnauthorizedError from '../errors/UnauthorizedError.js';
+import IntersectionError from '../errors/IntersectionError.js';
 
 const { SECURE_JWT_KEY } = process.env;
 

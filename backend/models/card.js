@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import isURL from 'validator/lib/isURL';
+import isURL from 'validator/lib/isURL.js';
 import {
   INCORRECT_URL_ERR,
   REQUIRED_CARD_NAME_ERR,
   REQUIRED_LINK_ERR,
-} from '../utils/ENUMS';
+} from '../utils/ENUMS.js';
 
 const cardSchema = new mongoose.Schema({
   name: {

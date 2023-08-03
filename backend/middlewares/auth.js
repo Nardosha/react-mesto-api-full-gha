@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import UnauthorizedError from '../errors/UnauthorizedError';
-import { UNAUTHORIZED_ERROR } from '../utils/ENUMS';
+import UnauthorizedError from '../errors/UnauthorizedError.js';
+import { UNAUTHORIZED_ERROR } from '../utils/ENUMS.js';
 
 const { SECURE_JWT_KEY } = process.env;
 

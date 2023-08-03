@@ -1,8 +1,8 @@
 import express from 'express';
 import {
   createCard, deleteCard, dislikeCard, getCards, likeCard,
-} from '../controllers/cards';
-import { validateCardData, validateCardId } from '../utils/validationHelper';
+} from '../controllers/cards.js';
+import { validateCardData, validateCardId } from '../utils/validationHelper.js';
 
 const router = express.Router();
 

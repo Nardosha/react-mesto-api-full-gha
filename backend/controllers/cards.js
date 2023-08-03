@@ -1,10 +1,10 @@
-import Card from '../models/card';
+import Card from '../models/card.js';
 import {
   DELETE_CARD_FORBIDDEN_ERROR,
   NOT_FOUND_CARD_ERROR,
-} from '../utils/ENUMS';
-import NotFoundError from '../errors/NotFoundError';
-import ForbiddenError from '../errors/ForbiddenError';
+} from '../utils/ENUMS.js';
+import NotFoundError from '../errors/NotFoundError.js';
+import ForbiddenError from '../errors/ForbiddenError.js';
 
 const createCard = async (req, res, next) => {
   try {

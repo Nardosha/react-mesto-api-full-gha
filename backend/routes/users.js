@@ -1,12 +1,12 @@
 import express from 'express';
 import {
   getUser, getUsers, updateAvatar, updateUser, getUserInfo,
-} from '../controllers/users';
+} from '../controllers/users.js';
 import {
   validateUserData,
   validateUserUrl,
   validateUserId,
-} from '../utils/validationHelper';
+} from '../utils/validationHelper.js';
 
 const router = express.Router();
 

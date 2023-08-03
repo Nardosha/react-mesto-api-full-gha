@@ -1,14 +1,14 @@
 import * as mongoose from 'mongoose';
-import isEmail from 'validator/lib/isEmail';
-import isURL from 'validator/lib/isURL';
+import isURL from 'validator/lib/isURL.js';
+import isEmail from 'validator/lib/isEmail.js';
 import {
   INCORRECT_EMAIL_ERR,
   INCORRECT_URL_ERR, MAX_LENGTH,
   MIN_LENGTH,
   REQUIRED_EMAIL_ERR,
   REQUIRED_PASSWORD_ERR, WRONG_AUTH_ERROR,
-} from '../utils/ENUMS';
-import UnauthorizedError from '../errors/UnauthorizedError';
+} from '../utils/ENUMS.js';
+import UnauthorizedError from '../errors/UnauthorizedError.js';
 
 const userSchema = new mongoose.Schema({
   name: {
