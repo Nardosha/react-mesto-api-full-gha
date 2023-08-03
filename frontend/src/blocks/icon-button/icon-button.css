@@ -1,0 +1,14 @@
+.icon-button {
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 5px 10px;
+    transition: all .3s ease-in;
+}
+
+.icon-button:hover {
+    opacity: .6;
+}

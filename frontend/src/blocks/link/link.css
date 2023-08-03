@@ -1,0 +1,15 @@
+.link {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    line-height: calc(17 / 14 * 100%);
+    font-weight: 400;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s ease-in;
+}
+.link:hover {
+    opacity: 0.6;
+}
