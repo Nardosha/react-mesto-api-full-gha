@@ -1,27 +1,26 @@
-import jwt from "jsonwebtoken";
-import UnauthorizedError from "../errors/UnauthorizedError.js";
-import {UNAUTHORIZED_ERROR} from "../utils/ENUMS.js";
+import jwt from 'jsonwebtoken';
+import UnauthorizedError from '../errors/UnauthorizedError';
+import { UNAUTHORIZED_ERROR } from '../utils/ENUMS';
 
 const { SECURE_JWT_KEY } = process.env;
 
-const extractBearerToken = (header) => {
-  return header.replace('Bearer ', '');
-};
+const extractBearerToken = (header) => header.replace('Bearer ', '');
 
-export const auth = (req, res, next) => {
+const auth = (req, res, next) => {
   try {
-    const {authorization} = req.headers
+    const { authorization } = req.headers;
 
     if (!authorization || !authorization?.startsWith('Bearer ')) {
-      throw new UnauthorizedError(UNAUTHORIZED_ERROR)
+      throw new UnauthorizedError(UNAUTHORIZED_ERROR);
     }
 
-    const jwtToken = extractBearerToken(authorization)
+    const jwtToken = extractBearerToken(authorization);
 
-    req.user = jwt.verify(jwtToken, SECURE_JWT_KEY)
-    next()
+    req.user = jwt.verify(jwtToken, SECURE_JWT_KEY);
+    next();
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
+export default auth;

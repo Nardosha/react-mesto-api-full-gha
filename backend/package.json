@@ -15,7 +15,6 @@
   "author": "Natalia Degtyareva",
   "license": "ISC",
   "devDependencies": {
-    "dotenv": "^16.3.1",
     "eslint": "^8.44.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -31,6 +30,7 @@
     "mongoose": "^7.3.1",
     "mongoose-unique-validator": "^4.0.0",
     "validator": "^13.9.0",
-    "winston": "^3.10.0"
+    "winston": "^3.10.0",
+    "dotenv": "^16.3.1"
   }
 }

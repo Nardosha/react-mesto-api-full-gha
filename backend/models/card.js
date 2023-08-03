@@ -1,14 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import isURL from 'validator/lib/isURL';
 import {
-  DELETE_CARD_FORBIDDEN_ERROR,
   INCORRECT_URL_ERR,
-  NOT_FOUND_CARD_ERROR,
   REQUIRED_CARD_NAME_ERR,
-  REQUIRED_LINK_ERR
-} from "../utils/ENUMS.js";
-import isURL from "validator/lib/isURL.js";
-import NotFoundError from "../errors/NotFoundError.js";
-import ForbiddenError from "../errors/ForbiddenError.js";
+  REQUIRED_LINK_ERR,
+} from '../utils/ENUMS';
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -21,8 +17,8 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: [true, REQUIRED_LINK_ERR],
     validate: {
-      validator: url => isURL(url),
-      message: INCORRECT_URL_ERR
+      validator: (url) => isURL(url),
+      message: INCORRECT_URL_ERR,
     },
   },
   owner: {
@@ -31,15 +27,15 @@ const cardSchema = new mongoose.Schema({
     required: true,
   },
   likes: {
-    type: [{type: mongoose.Schema.Types.ObjectId, ref: 'user'}],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
     default: [],
 
   },
   createdAt: {
     type: Date,
     default: Date.now,
-  }
-})
+  },
+});
 
 const Card = mongoose.model('card', cardSchema);
 
