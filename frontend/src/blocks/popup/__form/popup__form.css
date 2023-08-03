@@ -1,0 +1,9 @@
+.popup__form {
+    gap: 26px;
+}
+
+@media (min-width: 768px) {
+    .popup__form {
+        gap: 23px;
+    }
+}

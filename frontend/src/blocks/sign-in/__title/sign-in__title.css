@@ -1,0 +1,17 @@
+.sign-in__title {
+    font-family: "Inter", sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    line-height: calc(24 / 14 * 100%);
+    text-align: center;
+    color: #ffffff;
+    padding: 0;
+    margin: 0 0 50px 0;
+}
+
+@media (min-width: 768px) {
+    .sign-in__title {
+        font-size: 24px;
+        line-height: calc(29 / 24 * 100%);
+    }
+}

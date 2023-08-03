@@ -1,0 +1,24 @@
+.popup__info_type_error {
+  padding: 160px 0 0 0;
+}
+
+.popup__info_type_error::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: url("../../../../images/page/popup/popup__icon_type_error.svg")
+    center/cover no-repeat;
+  max-height: 120px;
+  max-width: 120px;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .popup__info_type_error {
+    padding: 152px 0 0 0;
+  }
+}
