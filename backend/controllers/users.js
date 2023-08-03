@@ -9,8 +9,7 @@ import {
 import NotFoundError from '../errors/NotFoundError.js';
 import UnauthorizedError from '../errors/UnauthorizedError.js';
 import IntersectionError from '../errors/IntersectionError.js';
-
-const { SECURE_JWT_KEY } = process.env;
+import SECURE_JWT_KEY from '../config.js';
 
 const login = async (req, res, next) => {
   try {

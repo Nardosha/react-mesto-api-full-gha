@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import UnauthorizedError from '../errors/UnauthorizedError.js';
 import { UNAUTHORIZED_ERROR } from '../utils/ENUMS.js';
-
-const { SECURE_JWT_KEY } = process.env;
+import SECURE_JWT_KEY from '../config.js';
 
 const extractBearerToken = (header) => header.replace('Bearer ', '');
 

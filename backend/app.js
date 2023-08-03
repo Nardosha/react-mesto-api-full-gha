@@ -3,23 +3,19 @@ import mongosse from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { errors } from 'celebrate';
-import usersRoutes from './routes/users.js';
-import cardRoutes from './routes/cards.js';
-import { NOT_FOUND_PAGE_ERROR } from './utils/ENUMS.js';
+import { PORT, DB_CONNECTION } from './config.js';
+import { errorLogger, requestLogger } from './middlewares/logger.js';
 import NotFoundError from './errors/NotFoundError.js';
 import errorHandler from './middlewares/errorHandler.js';
+import auth from './middlewares/auth.js';
+import cors from './middlewares/CORS.js';
+import usersRoutes from './routes/users.js';
+import cardRoutes from './routes/cards.js';
 import { validateLogin, validateUserData } from './utils/validationHelper.js';
 import { createUser, login } from './controllers/users.js';
-import auth from './middlewares/auth.js';
-import { errorLogger, requestLogger } from './middlewares/logger.js';
-import cors from './middlewares/CORS.js';
+import { NOT_FOUND_PAGE_ERROR } from './utils/ENUMS.js';
 
-dotenv.config();
-
-const { DEFAULT_PORT, DB_CONNECTION } = process.env;
-const { PORT = DEFAULT_PORT } = process.env;
-
-mongosse.connect(DB_CONNECTION);
+mongosse.connect("mongodb://localhost:27017/mestodb");
 
 const app = express();
 

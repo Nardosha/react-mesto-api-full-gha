@@ -4,24 +4,13 @@ module.exports = {
     es2021: true,
   },
   extends: 'airbnb-base',
-  overrides: [
-    // {
-    //   env: {
-    //     node: true,
-    //   },
-    //   files: [
-    //     '.eslintrc.{js,cjs}',
-    //   ],
-    //   parserOptions: {
-    //     sourceType: 'script',
-    //   },
-    // },
-  ],
+  overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   rules: {
+    "import/named": "warn",
     "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     'consistent-return': 'warn',
     "import/extensions": 0
