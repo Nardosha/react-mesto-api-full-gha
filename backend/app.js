@@ -1,7 +1,6 @@
 import express from 'express';
 import mongosse from 'mongoose';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import { errors } from 'celebrate';
 import { PORT, DB_CONNECTION } from './config.js';
 import { errorLogger, requestLogger } from './middlewares/logger.js';
@@ -15,7 +14,7 @@ import { validateLogin, validateUserData } from './utils/validationHelper.js';
 import { createUser, login } from './controllers/users.js';
 import { NOT_FOUND_PAGE_ERROR } from './utils/ENUMS.js';
 
-mongosse.connect("mongodb://localhost:27017/mestodb");
+mongosse.connect(DB_CONNECTION);
 
 const app = express();
 
