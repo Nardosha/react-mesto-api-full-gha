@@ -10,6 +10,8 @@ import NotFoundError from "../errors/NotFoundError.js";
 import UnauthorizedError from "../errors/UnauthorizedError.js";
 import intersectionError from "../errors/IntersectionError.js";
 
+const { SECURE_JWT_KEY } = process.env;
+
 const login = async (req, res, next) => {
   try {
     const {email, password} = req.body;
@@ -19,7 +21,7 @@ const login = async (req, res, next) => {
       throw new UnauthorizedError(WRONG_AUTH_ERROR)
     }
 
-    const token = jwt.sign({_id: user._id}, 'shrek', {
+    const token = jwt.sign({_id: user._id}, SECURE_JWT_KEY, {
       expiresIn: 3600000 * 24 * 7
     })
 

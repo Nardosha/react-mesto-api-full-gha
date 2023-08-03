@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import UnauthorizedError from "../errors/UnauthorizedError.js";
 import {UNAUTHORIZED_ERROR} from "../utils/ENUMS.js";
 
+const { SECURE_JWT_KEY } = process.env;
+
 const extractBearerToken = (header) => {
   return header.replace('Bearer ', '');
 };
@@ -16,7 +18,7 @@ export const auth = (req, res, next) => {
 
     const jwtToken = extractBearerToken(authorization)
 
-    req.user = jwt.verify(jwtToken, 'shrek')
+    req.user = jwt.verify(jwtToken, SECURE_JWT_KEY)
     next()
   } catch (err) {
     next(err)

@@ -16,9 +16,10 @@ import {cors} from "./middlewares/CORS.js";
 
 dotenv.config();
 
-const { PORT = 3000 } = process.env;
+const { DEFAULT_PORT, DB_CONNECTION } = process.env
+const { PORT = DEFAULT_PORT } = process.env;
 
-mongosse.connect("mongodb://localhost:27017/mestodb")
+mongosse.connect(DB_CONNECTION)
 
 const app = express();
 
