@@ -7,15 +7,15 @@ export const EditProfilePopup = ({ isOpen, onUpdateUser }) => {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name || '');
-  const [description, setDescription] = useState(currentUser.description || '');
+  const [about, setAbout] = useState(currentUser.about || '');
   const { isLoading, closeAllPopups } = useContext(AppContext);
 
   const _handleNameChange = (e) => {
     setName(e.target.value);
   };
 
-  const _handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+  const handleAboutChange = (e) => {
+    setAbout(e.target.value);
   };
 
   const _handleSubmit = (e) => {
@@ -23,13 +23,13 @@ export const EditProfilePopup = ({ isOpen, onUpdateUser }) => {
 
     onUpdateUser({
       name,
-      description,
+      about,
     });
   };
 
   useEffect(() => {
     setName(currentUser.name);
-    setDescription(currentUser.description);
+    setAbout(currentUser.about);
   }, [currentUser, isOpen]);
 
   return (
@@ -61,7 +61,7 @@ export const EditProfilePopup = ({ isOpen, onUpdateUser }) => {
 
         <label className="form__label" htmlFor="input_user_description">
           <input
-            className="form__input form__input_field_user-description"
+            className="form__input form__input_field_user-about"
             id="input_user_description"
             data-user-field="userDescription"
             name="about"
@@ -70,8 +70,8 @@ export const EditProfilePopup = ({ isOpen, onUpdateUser }) => {
             minLength="2"
             maxLength="200"
             required
-            value={description}
-            onChange={_handleDescriptionChange}
+            value={about}
+            onChange={handleAboutChange}
           />
           <span className="form__input-error" id="input_user_description-error"></span>
         </label>

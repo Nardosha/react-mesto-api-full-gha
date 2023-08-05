@@ -1,42 +1,41 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import logo from '../images/logo.svg';
-import { AppContext } from '../contexts/AppContext';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-export const Header = () => {
-  const context = useContext(AppContext);
+export const Header = React.memo(({ isLoggedIn, handleSignOut }) => {
   const location = useLocation();
 
   const setLocation = () => {
-    return !!(location.pathname === '/sign-in' || location.pathname === '/');
+    return !!(location.pathname === '/signin' || location.pathname === '/');
   };
 
-  const [isLogging, setIsLogging] = useState(setLocation);
-
-  useEffect(() => {
-    setIsLogging(setLocation);
-  });
+  const user = useContext(CurrentUserContext);
+  const isLogging = useRef(setLocation());
 
   return (
     <header className="header">
       <img className="header__logo" src={logo} alt="Логотип Mesto" />
-      {isLogging && !context.isLoggedIn && (
-        <Link to="/sign-up" className="link header__link">
+
+      <div className="header__user-email">{user.email}</div>
+      {isLogging && !isLoggedIn && (
+        <Link to="/signup" className="link header__link">
           Зарегестрироваться
         </Link>
       )}
 
-      {!isLogging && !context.isLoggedIn && (
-        <Link to="/sign-in" className="link header__link">
+      {!isLogging && !isLoggedIn && (
+        <Link to="/signin" className="link header__link">
           Войти
         </Link>
       )}
 
-      {context.isLoggedIn && (
-        <Link to="/sign-in" className="link header__link" onClick={context.handleSignOut}>
+      {isLoggedIn && (
+        <Link to="/signin" className="link header__link" onClick={handleSignOut}>
           Выйти
         </Link>
       )}
+      <div></div>
     </header>
   );
-};
+});

@@ -12,7 +12,7 @@ export const ImagePopup = ({ card }) => {
     <dialog
       className={`popup popup-show-photo ${card?.link ? popupOptions.openedPopupClass : ''}`}
       data-popup-type="SHOW"
-      open
+      open={card}
     >
       <div className="popup-show-photo__container">
         <button

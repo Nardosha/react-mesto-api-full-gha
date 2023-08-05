@@ -14,8 +14,8 @@ const createCard = async (req, res, next) => {
 
     const card = await Card.create({
       name, link, owner: ownerId, likes,
-    });
-    await card.populate(['owner', 'likes']);
+    })
+    await card.populate(['likes', 'owner'])
 
     res.send({ data: card });
   } catch (err) {
@@ -25,7 +25,10 @@ const createCard = async (req, res, next) => {
 
 const getCards = async (req, res, next) => {
   try {
-    const cards = await Card.find({});
+    const cards = await Card
+      .find({})
+      .sort({createdAt: -1})
+      .populate(['likes', 'owner'])
 
     res.send({ data: cards });
   } catch (err) {
@@ -74,7 +77,7 @@ const likeCard = async (req, res, next) => {
       throw new NotFoundError(NOT_FOUND_CARD_ERROR);
     }
 
-    await card.populate('likes');
+    await card.populate(['likes', 'owner']);
 
     res.send({ data: card });
   } catch (err) {
@@ -87,7 +90,9 @@ const dislikeCard = async (req, res, next) => {
     const userId = req.user._id;
     const { cardId } = req.params;
 
-    const card = await Card.findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true });
+    const card = await Card
+      .findByIdAndUpdate(cardId, { $pull: { likes: userId } }, { new: true })
+      .populate(['likes', 'owner']);
 
     if (!card) {
       throw new NotFoundError(NOT_FOUND_CARD_ERROR);

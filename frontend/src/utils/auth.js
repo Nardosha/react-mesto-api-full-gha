@@ -1,6 +1,6 @@
 import { checkResponse } from './helpers';
 
-const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.purple.unicorn.nomoreparties.co';
 
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
@@ -12,12 +12,13 @@ export function register(email, password) {
   }).then(checkResponse);
 }
 
-export function authorize(email, password) {
+export function login(email, password) {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({ email, password }),
   }).then(checkResponse);
 }
@@ -28,7 +29,7 @@ export function checkToken(token) {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
     },
+      credentials: 'include'
   }).then(checkResponse);
 }

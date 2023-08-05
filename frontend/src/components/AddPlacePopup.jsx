@@ -1,15 +1,14 @@
 import { PopupWithForm } from './PopupWithForm';
-import React, { useContext, useRef } from "react";
-import { AppContext } from "../contexts/AppContext";
+import React, { useContext, useEffect, useRef } from 'react';
+import { AppContext } from '../contexts/AppContext';
 
 export const AddPlacePopup = ({ isOpen, onAddPlace }) => {
   const { isLoading, closeAllPopups } = useContext(AppContext);
 
-
   const placeNameRef = useRef();
   const placeLinkRef = useRef();
 
-  const _handleAddPlace = e => {
+  const _handleAddPlace = (e) => {
     e.preventDefault();
 
     onAddPlace({
@@ -17,6 +16,13 @@ export const AddPlacePopup = ({ isOpen, onAddPlace }) => {
       link: placeLinkRef.current.value,
     });
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      placeNameRef.current.value = '';
+      placeLinkRef.current.value = '';
+    }
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -41,10 +47,7 @@ export const AddPlacePopup = ({ isOpen, onAddPlace }) => {
             maxLength="30"
             required
           />
-          <span
-            className="form__input-error"
-            id="input_image_description-error"
-          ></span>
+          <span className="form__input-error" id="input_image_description-error"></span>
         </label>
 
         <label className="form__label" htmlFor="input_image_src">

@@ -13,6 +13,7 @@ module.exports = {
     "import/named": "warn",
     "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     'consistent-return': 'warn',
-    "import/extensions": 0
+    "import/extensions": 0,
+    "quotes": [1, "single", { "avoidEscape": true }]
   }
 };

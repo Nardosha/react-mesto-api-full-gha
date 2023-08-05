@@ -10,7 +10,7 @@ export const PopupWithForm = (props) => {
   return (
     <dialog
       className={`popup popup_type_${name} ${isOpen ? popupOptions.openedPopupClass : ''}`}
-      open
+      open={isOpen}
     >
       <div className="popup__container">
         <button

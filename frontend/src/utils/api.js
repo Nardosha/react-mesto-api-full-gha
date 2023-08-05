@@ -1,28 +1,35 @@
+import { BASE_URL } from './auth';
+
 const apiConfig = {
-  url: 'https://mesto.nomoreparties.co/v1',
-  cohort: 'cohort-64',
+  url: BASE_URL,
   headers: {
-    authorization: 'bb9d3cad-fe83-4951-9df0-d4b1a4879bd4',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
   },
 };
 
 class Api {
   constructor(config) {
-    this.url = `${config.url}/${config.cohort}`;
+    this.url = `${config.url}`;
     this.headers = config.headers;
   }
 
   loadUserInfo() {
     return fetch(`${this.url}/users/me`, {
       headers: this.headers,
-    }).then(this._handleResult);
+      credentials: 'include',
+    })
+      .then(this._handleResult)
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   editUserInfo(userInfo) {
     return fetch(`${this.url}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
+      credentials: 'include',
       body: JSON.stringify(userInfo),
     }).then(this._handleResult);
   }
@@ -31,6 +38,7 @@ class Api {
     return fetch(`${this.url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
+      credentials: 'include',
       body: JSON.stringify(avatar),
     }).then(this._handleResult);
   }
@@ -38,6 +46,7 @@ class Api {
   getInitialCards() {
     return fetch(`${this.url}/cards`, {
       headers: this.headers,
+      credentials: 'include',
     }).then(this._handleResult);
   }
 
@@ -45,6 +54,7 @@ class Api {
     return fetch(`${this.url}/cards`, {
       method: 'POST',
       headers: this.headers,
+      credentials: 'include',
       body: JSON.stringify(cardParams),
     }).then(this._handleResult);
   }
@@ -53,6 +63,7 @@ class Api {
     return fetch(`${this.url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this.headers,
+      credentials: 'include',
     }).then(this._handleResult);
   }
 
@@ -67,6 +78,7 @@ class Api {
     return fetch(`${this.url}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this.headers,
+      credentials: 'include',
     }).then(this._handleResult);
   }
 
@@ -74,6 +86,7 @@ class Api {
     return fetch(`${this.url}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this.headers,
+      credentials: 'include',
     }).then(this._handleResult);
   }
 

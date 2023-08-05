@@ -9,7 +9,7 @@ import {
 import NotFoundError from '../errors/NotFoundError.js';
 import UnauthorizedError from '../errors/UnauthorizedError.js';
 import IntersectionError from '../errors/IntersectionError.js';
-import SECURE_JWT_KEY from '../config.js';
+import {JWT_SECRET} from '../config.js';
 
 const login = async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ const login = async (req, res, next) => {
       throw new UnauthorizedError(WRONG_AUTH_ERROR);
     }
 
-    const token = jwt.sign({ _id: user._id }, SECURE_JWT_KEY, {
+    const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
       expiresIn: 3600000 * 24 * 7,
     });
 
@@ -30,14 +30,16 @@ const login = async (req, res, next) => {
       sameSite: true,
     });
 
-    res.send({
+    const loggedUser = {
       token,
       _id: user._id,
       name: user.name,
       about: user.about,
       avatar: user.avatar,
       email: user.email,
-    });
+    }
+
+    res.send({data: loggedUser});
   } catch (err) {
     next(err);
   }
@@ -59,13 +61,15 @@ const createUser = async (req, res, next) => {
       name, about, avatar, email, password: hash,
     });
 
-    res.send({
+    const newUser = {
       _id: user._id,
       name: user.name,
       about: user.about,
       avatar: user.avatar,
       email: user.email,
-    });
+    };
+
+    res.send({data: newUser});
   } catch (err) {
     if (err.code === 11000) {
       next(new IntersectionError(INTERSECTION_ERROR));

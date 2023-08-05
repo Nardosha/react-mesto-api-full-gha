@@ -15,7 +15,7 @@ export const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    context.handleRegister(formValue.email, formValue.password);
+    context.handleRegister(formValue);
     setFormValue({ email: '', password: '' });
   };
 
@@ -65,7 +65,7 @@ export const Register = () => {
         </button>
       </form>
 
-      <Link to="/sign-in" className="link">
+      <Link to="/signin" className="link">
         Уже зарегистрированы? Войти
       </Link>
     </section>
