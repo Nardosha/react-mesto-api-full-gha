@@ -2,6 +2,7 @@ import Card from '../models/card.js';
 import {
   DELETE_CARD_FORBIDDEN_ERROR,
   NOT_FOUND_CARD_ERROR,
+  SUCCESS_CREATE_CODE,
 } from '../utils/ENUMS.js';
 import NotFoundError from '../errors/NotFoundError.js';
 import ForbiddenError from '../errors/ForbiddenError.js';
@@ -17,7 +18,7 @@ const createCard = async (req, res, next) => {
     })
     await card.populate(['likes', 'owner'])
 
-    res.send({ data: card });
+    res.status(SUCCESS_CREATE_CODE).send({ data: card });
   } catch (err) {
     next(err);
   }

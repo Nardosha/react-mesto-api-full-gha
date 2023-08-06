@@ -4,6 +4,7 @@ import { User } from '../models/user.js';
 import {
   INTERSECTION_ERROR,
   NOT_FOUND_USER_ERROR,
+  SUCCESS_CREATE_CODE,
   WRONG_AUTH_ERROR,
 } from '../utils/ENUMS.js';
 import NotFoundError from '../errors/NotFoundError.js';
@@ -69,7 +70,7 @@ const createUser = async (req, res, next) => {
       email: user.email,
     };
 
-    res.send({data: newUser});
+    res.status(SUCCESS_CREATE_CODE).send({data: newUser});
   } catch (err) {
     if (err.code === 11000) {
       next(new IntersectionError(INTERSECTION_ERROR));

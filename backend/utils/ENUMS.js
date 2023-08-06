@@ -24,3 +24,5 @@ export const UNAUTHORIZED_ERROR = 'Необходимо авторизовать
 
 export const DEFAULT_ERROR_CODE = 500;
 export const INTERNAL_SERVER_ERROR = 'На сервере произошла ошибка.';
+
+export const SUCCESS_CREATE_CODE = 201;
