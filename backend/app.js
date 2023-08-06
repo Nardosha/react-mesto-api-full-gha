@@ -1,9 +1,9 @@
 import express from 'express';
 import mongosse from 'mongoose';
 import helmet from "helmet";
-import rateLimit from 'express-rate-limit'
+import rateLimit from 'express-rate-limit';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
 import { PORT, DB_CONNECTION } from './config.js';
 import { errorLogger, requestLogger } from './middlewares/logger.js';
@@ -21,7 +21,7 @@ const app = express();
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100
+  max: 100,
 });
 
 app.use(limiter);
@@ -42,15 +42,13 @@ app.use('/signup', validateLogin, validateUserData, createUser);
 app.use('/signin', validateLogin, login);
 app.use('/users', auth, usersRoutes);
 app.use('/cards', auth, cardRoutes);
-
-app.use(errorLogger);
-
-
-app.use((req, res, next) => {
+app.use('*', (req, res, next) => {
   next(new NotFoundError(NOT_FOUND_PAGE_ERROR));
 });
 
 app.use(errors());
+
+app.use(errorLogger);
 
 app.use(errorHandler);
 

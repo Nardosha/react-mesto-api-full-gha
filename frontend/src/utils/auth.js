@@ -23,7 +23,18 @@ export function login(email, password) {
   }).then(checkResponse);
 }
 
-export function checkToken(token) {
+
+export function logout() {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(checkResponse);
+}
+
+export function checkToken() {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {

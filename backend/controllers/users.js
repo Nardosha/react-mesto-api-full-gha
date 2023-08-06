@@ -24,7 +24,7 @@ const login = async (req, res, next) => {
       expiresIn: 3600000 * 24 * 7,
     });
 
-    res.cookie('jwt', token, {
+    res.cookie('token', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
       sameSite: true,
@@ -162,6 +162,15 @@ const updateAvatar = async (req, res, next) => {
   }
 };
 
+const signout = async (req, res, next) => {
+  try {
+    res.clearCookie('token');
+    res.send({ data: 'Пользователь разлогинен!' });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export {
   login,
   createUser,
@@ -170,4 +179,5 @@ export {
   updateUser,
   updateAvatar,
   getUserInfo,
+  signout,
 };

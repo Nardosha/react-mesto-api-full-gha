@@ -5,7 +5,7 @@ import { JWT_SECRET } from '../config.js';
 
 const auth = (req, res, next) => {
   try {
-    const { token } = req.cookies.jwt;
+    const { token } = req.cookies;
 
     req.user = jwt.verify(token, JWT_SECRET);
 

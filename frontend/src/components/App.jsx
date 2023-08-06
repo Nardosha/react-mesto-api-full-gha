@@ -139,6 +139,7 @@ function App() {
       }
     } catch (e) {
       console.log('Юзер или карточки не загрузились', e);
+      setIsInfoPopupOpen(true);
     }
   };
 
@@ -173,7 +174,6 @@ function App() {
       const { data: user } = await auth.login(formData.email, formData.password);
 
       if (user?.token) {
-        localStorage.setItem('jwt', user.token);
         navigate('/', { replace: true });
         setIsLoggedIn(true);
         setCurrentUser({
@@ -194,12 +194,7 @@ function App() {
 
   const checkAuthToken = async () => {
     try {
-      const token = localStorage.getItem('jwt');
-      if (!token) {
-        return;
-      }
-
-      const { data: user } = await auth.checkToken(token);
+      const { data: user } = await auth.checkToken();
 
       if (user) {
         setIsLoggedIn(true);
@@ -223,13 +218,17 @@ function App() {
     }
   };
 
-  const handleSignOut = () => {
-    setIsLoggedIn(false);
-    setCurrentUser({ name: '', email: '', about: '', avatar: '', _id: null });
+  const handleSignOut = async () => {
+      try {
+      await auth.logout();
+      setIsLoggedIn(false);
+      setCurrentUser({ name: '', email: '', about: '', avatar: '', _id: null });
+      navigate('/signin', { replace: true });
 
-    localStorage.removeItem('jwt');
-
-    navigate('/', { replace: true });
+    } catch (err) {
+       console.error((err));
+       setIsInfoPopupOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -243,6 +242,7 @@ function App() {
         }
       } catch (err) {
         console.log(err);
+        setIsInfoPopupOpen(true);
       }
     }
 

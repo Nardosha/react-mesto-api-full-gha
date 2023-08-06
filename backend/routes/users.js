@@ -1,7 +1,5 @@
 import express from 'express';
-import {
-  getUser, getUsers, updateAvatar, updateUser, getUserInfo,
-} from '../controllers/users.js';
+import { getUser, getUsers, updateAvatar, updateUser, getUserInfo, signout } from '../controllers/users.js';
 import {
   validateUserData,
   validateUserUrl,
@@ -15,5 +13,6 @@ router.get('/me', getUserInfo);
 router.get('/:userId', validateUserId, getUser);
 router.patch('/me', validateUserData, updateUser);
 router.patch('/me/avatar', validateUserUrl, updateAvatar);
+router.patch('/signout', signout);
 
 export default router;
