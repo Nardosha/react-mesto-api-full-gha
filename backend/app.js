@@ -39,6 +39,12 @@ mongosse.connect(DB_CONNECTION);
 
 app.use(bodyParser.json());
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.use('/signup', validateLogin, validateUserData, createUser);
 app.use('/signin', validateLogin, login);
 app.use('/users', auth, usersRoutes);
