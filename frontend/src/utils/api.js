@@ -16,13 +16,11 @@ class Api {
 
   loadUserInfo() {
     return fetch(`${this.url}/users/me`, {
+      method: 'GET',
       headers: this.headers,
       credentials: 'include',
     })
       .then(this._handleResult)
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   editUserInfo(userInfo) {

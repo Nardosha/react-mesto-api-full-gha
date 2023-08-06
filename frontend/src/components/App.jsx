@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { Main } from './Main';
@@ -21,20 +21,22 @@ function App() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState({
     name: '',
-    email: '',
     about: '',
     avatar: '',
     _id: null,
   });
+  const [userEmail, setUserEmail] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cards, setCards] = useState([]);
+
+  const tooltip = useRef({ type: 'success', text: 'Вы успешно зарегистрировались!' });
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
   const _handleEditAvatarClick = () => {
@@ -130,7 +132,6 @@ function App() {
       if (user) {
         setCurrentUser({
           name: user.name,
-          email: user.email,
           about: user.about,
           avatar: user.avatar,
           _id: user._id,
@@ -139,37 +140,35 @@ function App() {
       }
     } catch (e) {
       console.log('Юзер или карточки не загрузились', e);
-      setIsInfoPopupOpen(true);
+      showPopup('error', 'Что-то пошло не так! Попробуйте ещё раз.');
+      setIsLoggedIn(false);
+      setUserEmail('');
     }
   };
 
   const handleRegister = async (formData) => {
     try {
-      if (!formData) {
-        setIsInfoPopupOpen(true);
-        return;
-      }
-
       const res = await auth.register(formData.email, formData.password);
       if (!res?.data) {
         return;
       }
 
-      setIsLoggedIn(true);
-      setIsInfoPopupOpen(true);
+      showPopup('success', 'Регистрация прошла успешно!');
       navigate('/signin', { replace: true });
     } catch (err) {
-      if (err.status === 409) {
-        console.log('Такой пользователь уже существует');
-      }
       setIsLoggedIn(false);
-      setIsInfoPopupOpen(true);
+
+      if (err.status === 409) {
+        showPopup('error', 'Такой пользователь уже существует.');
+        return;
+      }
+
+      showPopup('error', 'Что-то пошло не так! Попробуйте ещё раз.');
     }
   };
 
   const handleLogin = async (formData) => {
-    if (!formData) return;
-
+    setIsLoading(true);
     try {
       const { data: user } = await auth.login(formData.email, formData.password);
 
@@ -179,75 +178,76 @@ function App() {
         setCurrentUser({
           ...currentUser,
           name: user.name,
-          email: user.email,
           about: user.about,
           avatar: user.avatar,
           _id: user._id,
         });
-        await loadData();
+        setUserEmail(user.email);
       }
     } catch (e) {
       setIsLoggedIn(false);
-      setIsInfoPopupOpen(true);
+      setUserEmail('');
+      showPopup('error', 'Что-то пошло не так! Попробуйте ещё раз.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const checkAuthToken = async () => {
+    setIsLoading(true);
     try {
       const { data: user } = await auth.checkToken();
 
       if (user) {
         setIsLoggedIn(true);
-        setIsLoading(true);
         setCurrentUser({
           ...currentUser,
           name: user.name,
-          email: user.email,
           about: user.about,
           avatar: user.avatar,
           _id: user._id,
         });
-        navigate('/me', { replace: true });
-
+        setUserEmail(user.email);
+        navigate('/', { replace: true });
         return user;
       }
     } catch (err) {
       console.error(err);
+      setIsLoggedIn(false);
+      setUserEmail('');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSignOut = async () => {
-      try {
+    try {
       await auth.logout();
       setIsLoggedIn(false);
-      setCurrentUser({ name: '', email: '', about: '', avatar: '', _id: null });
+      setCurrentUser({ name: '', about: '', avatar: '', _id: null });
+      setUserEmail('');
       navigate('/signin', { replace: true });
-
     } catch (err) {
-       console.error((err));
-       setIsInfoPopupOpen(true);
+      console.error(err);
+      showPopup('error', 'Что-то пошло не так! Попробуйте ещё раз.');
     }
   };
 
   useEffect(() => {
-    async function fetch() {
-      try {
-        const user = await checkAuthToken();
-
-        if (user) {
-          const { data: cards } = await api.getInitialCards();
-          setCards([...cards]);
-        }
-      } catch (err) {
-        console.log(err);
-        setIsInfoPopupOpen(true);
-      }
-    }
-
-    fetch();
+    checkAuthToken();
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+
+    loadData();
+  }, [isLoggedIn]);
+
+  const showPopup = (type, text, isOpen = true) => {
+
+    tooltip.current = { type, text };
+    setIsInfoPopupOpen(isOpen);
+  };
 
   return (
     <div className="root">
@@ -263,7 +263,7 @@ function App() {
       >
         <CurrentUserContext.Provider value={currentUser}>
           <div className="wrapper">
-            <Header isLoggedIn={isLoggedIn} handleSignOut={handleSignOut} />
+            <Header isLoggedIn={isLoggedIn} handleSignOut={handleSignOut} userEmail={userEmail} />
 
             <Routes>
               <Route
@@ -306,7 +306,11 @@ function App() {
 
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-          <InfoTooltip type={isLoggedIn ? 'success' : 'error'} isOpen={isInfoPopupOpen} />
+          <InfoTooltip
+            type={tooltip.current.type}
+            text={tooltip.current.text}
+            isOpen={isInfoPopupOpen}
+          />
         </CurrentUserContext.Provider>
       </AppContext.Provider>
     </div>

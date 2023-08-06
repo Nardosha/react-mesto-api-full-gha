@@ -13,6 +13,6 @@ router.get('/me', getUserInfo);
 router.get('/:userId', validateUserId, getUser);
 router.patch('/me', validateUserData, updateUser);
 router.patch('/me/avatar', validateUserUrl, updateAvatar);
-router.patch('/signout', signout);
+router.delete('/signout', signout);
 
 export default router;

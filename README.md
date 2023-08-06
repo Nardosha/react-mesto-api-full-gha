@@ -11,7 +11,7 @@
 
 IP-адрес 51.250.0.162
 
-Frontend (https://purple.unicorn.nomoreparties.co)
+Frontend https://purple.unicorn.nomoreparties.co
 
-Backend (https://api.purple.unicorn.nomoreparties.co)
+Backend https://api.purple.unicorn.nomoreparties.co
 
